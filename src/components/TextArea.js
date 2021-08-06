@@ -52,97 +52,97 @@ const TextArea = ({ handleClose, setAnchorEl }) => {
       });
   };
   return (
-    <Container className={classes.textArea}>
-      <Grid container>
-        <Grid
-          xs={12}
-          sm={10}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h5">
-            <b>Create post</b>
-          </Typography>
+    <>
+      <Container className={classes.textArea}>
+        <Grid container>
+          <Grid
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h5">
+              <b>Create post</b>
+            </Typography>
+          </Grid>
+          <Grid>
+            <Button onClick={() => handleClose(setAnchorEl(null))}>
+              <ClearIcon />
+            </Button>
+          </Grid>
         </Grid>
-        <Grid xs={12} sm={2}>
-          <Button onClick={() => handleClose(setAnchorEl(null))}>
-            <ClearIcon />
-          </Button>
-        </Grid>
-      </Grid>
-      <hr />
-      <Grid>
-        <textarea
-          style={{
-            height: "250px",
-            width: "450px",
-            padding: 15,
-            fontSize: "25px",
-          }}
-          placeholder="What's in your mind?"
-          onChange={(e) => setText(e.target.value)}
-          value={text}
-        />
-      </Grid>
-      <Grid>
-        <Input
-          value={gifSearch}
-          placeholder="Search GIF"
-          onChange={(e) => {
-            setGifSearch(e.target.value);
-          }}
-        />
-      </Grid>
-      <Grid style={{ marginTop: 10 }}>
-        <Button
-          onClick={handleGif}
-          size="medium"
-          color="primary"
-          variant="outlined"
-        >
-          <GifIcon fontSize="large" />
-        </Button>
-      </Grid>
-      {gifShow && (
+        <hr />
         <Grid>
-          {gifData.map((data, index) => (
-            <div
-              style={{ margin: "20px" }}
-              onClick={() => {
-                setGif(data.images.preview_gif.url);
-                setGifSelected(index);
-              }}
-            >
-              <img
-                className={`${index === gifSelected ? "border" : ""}`}
-                src={data.images.preview_gif.url}
-                alt="gif"
-              />
-            </div>
-          ))}
+          <textarea
+            style={{
+              height: "250px",
+              width: "450px",
+              padding: 15,
+              fontSize: "25px",
+            }}
+            placeholder="What's in your mind?"
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+          />
         </Grid>
-      )}
-
-      <Grid
-        style={{
-          margin: "15px 0px",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Grid>
+          <Input
+            value={gifSearch}
+            placeholder="Search GIF"
+            onChange={(e) => {
+              setGifSearch(e.target.value);
+            }}
+          />
+        </Grid>
+        <Grid style={{ marginTop: 10 }}>
           <Button
-            onClick={handleSubmit}
-            variant="contained"
+            onClick={handleGif}
             size="medium"
             color="primary"
+            variant="outlined"
           >
-            Post
+            <GifIcon fontSize="large" />
           </Button>
-        </div>
-      </Grid>
-    </Container>
+        </Grid>
+        {gifShow && (
+          <Grid>
+            {gifData.map((data, index) => (
+              <div
+                style={{ margin: "20px" }}
+                onClick={() => {
+                  setGif(data.images.preview_gif.url);
+                  setGifSelected(index);
+                }}
+              >
+                <img
+                  className={`${index === gifSelected ? "border" : ""}`}
+                  src={data.images.preview_gif.url}
+                  alt="gif"
+                />
+              </div>
+            ))}
+          </Grid>
+        )}
+
+        <Grid
+          style={{
+            margin: "15px 0px",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              size="medium"
+              color="primary"
+            >
+              Post
+            </Button>
+          </div>
+        </Grid>
+      </Container>
+    </>
   );
 };
 
