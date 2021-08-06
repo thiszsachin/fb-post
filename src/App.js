@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px 0px",
   },
   list: {
-    minHeight: 600,
+    minHeight: 630,
   },
 }));
 

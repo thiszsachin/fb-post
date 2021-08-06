@@ -42,3 +42,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.border {
+  border: 4px solid rgb(72, 160, 243);
+}

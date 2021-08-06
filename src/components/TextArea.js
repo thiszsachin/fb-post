@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
 const TextArea = ({ handleClose, setAnchorEl }) => {
   const [arr, setArr] = useContext(GifContext);
   const [text, setText] = useState("");
+  const [gifSearch, setGifSearch] = useState("");
+  const [gifShow, setGifShow] = useState(false);
+  const [gifData, setGifData] = useState([]);
+  const [gif, setGif] = useState("");
+  const [gifSelected, setGifSelected] = useState();
+
   const classes = useStyles();
 
   const handleSubmit = () => {
@@ -24,13 +30,30 @@ const TextArea = ({ handleClose, setAnchorEl }) => {
     const yyyy = new Date().getFullYear();
     const date = dd + "-" + mm + "-" + yyyy;
     setAnchorEl(null);
-    alert("Your post is Updated");
+    setText("");
+    setArr([{ post: text, date: date, gif: gif }, ...arr]);
 
-    setArr([{ post: text, date: date }, ...arr]);
+    setGif("");
+    setGifData([]);
+    setGifSearch("");
+    setGifShow(false);
+  };
+
+  const handleGif = () => {
+    fetch(
+      "https://api.giphy.com/v1/gifs/search?api_key=ofxp2AAxTRdrG4Aj7z4ydTOEDu2UdSu8&q=" +
+        gifSearch +
+        "&limit=5"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setGifData(data.data);
+        setGifShow(true);
+      });
   };
   return (
     <Container className={classes.textArea}>
-      <Grid container xs={12}>
+      <Grid container>
         <Grid
           xs={12}
           sm={10}
@@ -54,7 +77,7 @@ const TextArea = ({ handleClose, setAnchorEl }) => {
       <Grid>
         <textarea
           style={{
-            height: "300px",
+            height: "250px",
             width: "450px",
             padding: 15,
             fontSize: "25px",
@@ -64,25 +87,60 @@ const TextArea = ({ handleClose, setAnchorEl }) => {
           value={text}
         />
       </Grid>
+      <Grid>
+        <Input
+          value={gifSearch}
+          placeholder="Search GIF"
+          onChange={(e) => {
+            setGifSearch(e.target.value);
+          }}
+        />
+      </Grid>
       <Grid style={{ marginTop: 10 }}>
-        <Button size="medium" color="primary" variant="outlined">
-          {/* <Typography>Add</Typography> */}
+        <Button
+          onClick={handleGif}
+          size="medium"
+          color="primary"
+          variant="outlined"
+        >
           <GifIcon fontSize="large" />
         </Button>
       </Grid>
+      {gifShow && (
+        <Grid>
+          {gifData.map((data, index) => (
+            <div
+              style={{ margin: "20px" }}
+              onClick={() => {
+                setGif(data.images.preview_gif.url);
+                setGifSelected(index);
+              }}
+            >
+              <img
+                className={`${index === gifSelected ? "border" : ""}`}
+                src={data.images.preview_gif.url}
+                alt="gif"
+              />
+            </div>
+          ))}
+        </Grid>
+      )}
+
       <Grid
         style={{
-          margin: "10px 0px",
+          margin: "15px 0px",
         }}
       >
-        <Button
-          onClick={handleSubmit}
-          variant="contained"
-          size="medium"
-          color="primary"
-        >
-          Post
-        </Button>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            size="medium"
+            color="primary"
+          >
+            Post
+          </Button>
+        </div>
       </Grid>
     </Container>
   );

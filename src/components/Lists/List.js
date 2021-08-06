@@ -9,10 +9,8 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import pic from "../../static/images/sachinPic.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,10 +53,10 @@ export default function List({ post }) {
           {post.post}
         </Typography>
       </CardContent>
-      <CardMedia
-        className={classes.media}
-        image="https://media.giphy.com/media/144Q1gg0FkTEVG/giphy.gif"
-      />
+      {post.gif !== "" && (
+        <CardMedia className={classes.media} image={post.gif} />
+      )}
+
       <hr />
       <CardActions>
         <IconButton
@@ -71,18 +69,6 @@ export default function List({ post }) {
             <b>Like</b>
           </Typography>
         </IconButton>
-        {/* <IconButton aria-label="add to favorites">
-          <ChatBubbleOutlineIcon />
-          <Typography variant="h6">
-            <b>Comment</b>
-          </Typography>
-        </IconButton> */}
-        {/* <IconButton aria-label="share">
-          <ShareIcon />
-          <Typography variant="h6">
-            <b>Share</b>
-          </Typography>
-        </IconButton> */}
       </CardActions>
     </Card>
   );
