@@ -54,7 +54,7 @@ export default function CreatePost() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <TextArea />
+        <TextArea handleClose={handleClose} setAnchorEl={setAnchorEl} />
       </Menu>
     </Paper>
   );

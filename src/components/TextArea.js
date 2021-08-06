@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useContext } from "react";
 import { GifContext } from "./giphyContext/GiphyContext";
+import GifIcon from "@material-ui/icons/Gif";
 
 const useStyles = makeStyles((theme) => ({
   textArea: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TextArea = () => {
+const TextArea = ({ handleClose, setAnchorEl }) => {
   const [arr, setArr] = useContext(GifContext);
   const [text, setText] = useState("");
   const classes = useStyles();
@@ -22,6 +23,8 @@ const TextArea = () => {
     const mm = new Date().getMonth();
     const yyyy = new Date().getFullYear();
     const date = dd + "-" + mm + "-" + yyyy;
+    setAnchorEl(null);
+    alert("Your post is Updated");
 
     setArr([{ post: text, date: date }, ...arr]);
   };
@@ -42,7 +45,7 @@ const TextArea = () => {
           </Typography>
         </Grid>
         <Grid xs={12} sm={2}>
-          <Button>
+          <Button onClick={() => handleClose(setAnchorEl(null))}>
             <ClearIcon />
           </Button>
         </Grid>
@@ -51,7 +54,7 @@ const TextArea = () => {
       <Grid>
         <textarea
           style={{
-            height: "350px",
+            height: "300px",
             width: "450px",
             padding: 15,
             fontSize: "25px",
@@ -61,7 +64,17 @@ const TextArea = () => {
           value={text}
         />
       </Grid>
-      <Grid style={{ marginTop: 15 }}>
+      <Grid style={{ marginTop: 10 }}>
+        <Button size="medium" color="primary" variant="outlined">
+          {/* <Typography>Add</Typography> */}
+          <GifIcon fontSize="large" />
+        </Button>
+      </Grid>
+      <Grid
+        style={{
+          margin: "10px 0px",
+        }}
+      >
         <Button
           onClick={handleSubmit}
           variant="contained"
